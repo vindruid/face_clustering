@@ -6,8 +6,8 @@ from skimage.transform import resize
 import pickle
 
 ## DEFINE PARAMETER
-path_prototxt = 'models/deploy.prototxt'
-path_model = 'models/res10_300x300_ssd_iter_140000.caffemodel'
+path_prototxt = 'models/face_detection/deploy.prototxt'
+path_model = 'models/face_detection/res10_300x300_ssd_iter_140000.caffemodel'
 path_embedding_model = 'models/embeddings/facenet_keras.h5'
 confidence = 0.60
 
