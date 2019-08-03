@@ -53,7 +53,9 @@ def l2_normalize(x, axis=-1, epsilon=1e-10):
 
 ## iterate image
 path_dir = 'images/'
-list_images = sorted([os.path.join(path_dir,img_name) for img_name in os.listdir(path_dir) ])
+list_images = sorted([os.path.join(path_dir,img_name) for img_name in os.listdir(path_dir) 
+                    if os.path.join(path_dir,img_name).split('.')[-1] in ['png', 'webp', 'jpeg', 'JPG', 'jpg'] ])
+
 
 dict_embs = {}
 for img_path in list_images:

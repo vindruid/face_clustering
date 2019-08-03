@@ -1,2 +1,2 @@
 # face-clustering
- face clustering based on FaceNet and DBSCAN
+Make folders of images based on faces in image

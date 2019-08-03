@@ -24,6 +24,8 @@ print("[INFO] # unique faces: {}".format(numUniqueFaces))
 
 initial_path = 'images'
 target_path = 'clustered_images'
+if not os.path.exists(target_path):
+    os.makedirs(target_path)
 
 for name_, id_ in zip(filenames, preds):
     if id_ != -1: #remove image with unknown faces
