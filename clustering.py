@@ -15,12 +15,9 @@ filenames = list(dict_emb.keys())
 clt = DBSCAN(eps = 0.680,metric="euclidean", n_jobs=1 , min_samples = 5)
 preds = clt.fit_predict(encodings)
 
-labelIDs = np.unique(clt.labels_)
-numUniqueFaces = len(np.where(labelIDs > -1)[0])
+label_ids = np.unique(clt.labels_)
+numUniqueFaces = len(np.where(label_ids > -1)[0])
 print("[INFO] # unique faces: {}".format(numUniqueFaces))
-
-# list(preds).count(0),list(preds).count(1),list(preds).count(2),list(preds).count(3), list(preds).count(4), list(preds).count(-1)
-
 
 initial_path = 'images'
 target_path = 'clustered_images'
@@ -32,13 +29,10 @@ for name_, id_ in zip(filenames, preds):
         target_path_id = os.path.join(target_path, str(id_))
         if not os.path.exists(target_path_id):
             os.makedirs(target_path_id)
-
         filename = '_'.join(name_.split('/')[1].split('_')[:-1])
         from_path = os.path.join(initial_path,filename)
         to_path = os.path.join(target_path_id, filename)
-
         copyfile(from_path, to_path)
-    
 
 # SHOW IMAGE MONTAGES
 target_path = 'clustered_images'
@@ -46,7 +40,7 @@ total_show = 9
 montages_show_shape = (3,3)
 montages_img_shape = (200,200)
 
-for id_ in sorted(labelIDs):
+for id_ in sorted(label_ids):
     list_image = []
     
     if id_ != -1: #remove image with unknown faces
@@ -63,7 +57,7 @@ for id_ in sorted(labelIDs):
         montage = build_montages(list_image, montages_img_shape, montages_show_shape)[0]
 
         # show the output montage
-        title = "Face ID #{}".format(id_)
+        title = "face id : {}".format(id_)
         cv2.imshow(title, montage)
         cv2.waitKey(0)
         

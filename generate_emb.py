@@ -5,7 +5,7 @@ import numpy as np
 from skimage.transform import resize
 import pickle
 
-## DEFINE PARAMETER
+## DEFINE PATH & PARAMETER
 path_prototxt = 'models/face_detection/deploy.prototxt'
 path_model = 'models/face_detection/res10_300x300_ssd_iter_140000.caffemodel'
 path_embedding_model = 'models/embeddings/facenet_keras.h5'
@@ -14,12 +14,9 @@ confidence = 0.60
 ## LOAD MODEL
 print("[INFO] loading Face Detector model...\n")
 net = cv2.dnn.readNetFromCaffe(path_prototxt, path_model)
-print("[INFO] Loaded !")
-print("==" * 20)
 print("[INFO] loading Face Embeding model...\n")
 facenet = load_model(path_embedding_model)
 facenet._make_predict_function()
-print("[INFO] Loaded !")
 
 ## DEFINE FUNCTION
 
@@ -56,8 +53,7 @@ path_dir = 'images/'
 list_images = sorted([os.path.join(path_dir,img_name) for img_name in os.listdir(path_dir) 
                     if os.path.join(path_dir,img_name).split('.')[-1] in ['png', 'webp', 'jpeg', 'JPG', 'jpg'] ])
 
-
-dict_embs = {}
+dict_embs = {} ### image path + '_' + face index in image --> face embedding
 for img_path in list_images:
     print(img_path)
     img = cv2.imread(img_path)
@@ -75,7 +71,7 @@ for img_path in list_images:
             cv2.rectangle(img, (startX, startY),
                             (endX, endY), (0, 255, 0), 2)
             face_crop = img[startY:endY, startX:endX]
-            emb = calc_embeds(face_crop, facenet)
+            emb = calc_embeds(face_crop, facenet) 
             dict_embs[img_path + '_' + str(i)] = emb
 
 with open("embeddings.pkl", 'wb') as filename: 
